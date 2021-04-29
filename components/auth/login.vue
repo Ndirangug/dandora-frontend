@@ -32,8 +32,17 @@ export default Vue.extend({
   },
 
   methods: {
-    login() {
-      this.$router.push('/houses')
+    async login() {
+      const url = `${this.$config.apiUrl}/login`
+      try {
+        const tenant = await this.$axios.post(url, this.form)
+        console.log(tenant)
+        this.$router.push('/houses')
+      } catch (error) {
+        console.error(error)
+      }
+
+      
     },
   },
 })

@@ -47,8 +47,15 @@ export default Vue.extend({
   },
 
   methods: {
-    signup() {
-      this.$router.push('/houses')
+    async signup() {
+      const url = `${this.$config.apiUrl}/tenants`
+      try {
+        const tenant = await this.$axios.post(url, this.form)
+        console.log(tenant)
+        this.$router.push('/houses')
+      } catch (error) {
+        console.error(error)
+      }
     },
   },
 })
