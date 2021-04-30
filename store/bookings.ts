@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
-import { Tenancy } from '~/types/types'
+import { Booking } from '~/types/types'
 
-@Module({ name: 'tenancies', stateFactory: true, namespaced: true })
-export default class Tenancies extends VuexModule {
-  allTenancies: Tenancy[] = []
+@Module({ name: 'bookings', stateFactory: true, namespaced: true })
+export default class Bookings extends VuexModule {
+  allBookings: Booking[] = []
 
   @Mutation
-  initTenants(tenancies: Tenancy[]) {
-    this.allTenancies = tenancies
+  initTenants(bookings: Booking[]) {
+    this.allBookings = bookings
   }
 }
