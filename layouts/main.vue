@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar tile elevation="0" color="white" app>
+    <v-app-bar elevate-on-scroll tile elevation="0" color="white" app>
       <v-app-bar-nav-icon class="ml-16" @click.stop="drawer = !drawer">
         <v-icon>{{ icons.menu }}</v-icon>
       </v-app-bar-nav-icon>
