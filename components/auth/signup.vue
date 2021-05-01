@@ -31,7 +31,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '~/store'
 import { Tenant } from '~/types/types'
+
 export default Vue.extend({
   data() {
     return {
@@ -48,14 +50,19 @@ export default Vue.extend({
 
   methods: {
     async signup() {
+      authStore.setAuthLoading(true)
       const url = `${this.$config.apiUrl}/tenants`
       try {
         const tenant = await this.$axios.post(url, this.form)
-        console.log(tenant)
+        authStore.initTenant(tenant.data)
         this.$router.push('/houses')
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error)
+         authStore.setAuthLoading(false)
+        authStore.setAuthError(true, error)
       }
+      authStore.setAuthLoading(false)
     },
   },
 })

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Context } from '@nuxt/types'
 import { Store } from 'vuex'
-import { housesStore, initialiseStores } from '~/utils/store-accessor'
+import { bookingsStore, housesStore, initialiseStores, paymentsStore, tenanciesStore, tenantsStore } from '~/utils/store-accessor'
 const initializer = (store: Store<any>) => initialiseStores(store)
 export const plugins = [initializer]
 export * from '~/utils/store-accessor'
@@ -14,8 +14,16 @@ export const actions = {
     initialiseStores(store)
 
     try {
-      const housesResponse = await $axios.$get(`${$config.apiUrl}/houses`)
-      housesStore.initHouses(housesResponse)
+      const houses = await $axios.$get(`${$config.apiUrl}/houses`)
+      const payments = await $axios.$get(`${$config.apiUrl}/payments`)
+      const tenants = await $axios.$get(`${$config.apiUrl}/tenants`)
+      const bookings = await $axios.$get(`${$config.apiUrl}/bookings`)
+      const tenancies = await $axios.$get(`${$config.apiUrl}/tenancies`)
+      housesStore.initHouses(houses)
+      paymentsStore.initPayments(payments)
+      tenantsStore.initTenants(tenants)
+      bookingsStore.initBookings(bookings)
+      tenanciesStore.initTenancies(tenancies)
     } catch (error) {
       console.error(error.message)
     }

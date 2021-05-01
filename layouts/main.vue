@@ -21,11 +21,11 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="profile">
             <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
 
-           <v-list-item>
+          <v-list-item @click="logOut">
             <v-list-item-title>Log Out</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -39,6 +39,7 @@
 <script lang="ts">
 import { mdiMenu } from '@mdi/js'
 import Vue from 'vue'
+import { authStore } from '~/store'
 
 export default Vue.extend({
   data() {
@@ -54,6 +55,21 @@ export default Vue.extend({
   watch: {
     group() {
       this.drawer = false
+    },
+  },
+
+  methods: {
+    logOut() {
+      // eslint-disable-next-line no-console
+      console.log('log out')
+      authStore.logOut()
+      this.$router.push('/auth')
+    },
+    profile() {
+      this.$router.push('/profile')
+    },
+    admin() {
+      this.$router.push('/admin')
     },
   },
 })

@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '~/store'
 export default Vue.extend({
   data() {
     return {
@@ -33,16 +34,19 @@ export default Vue.extend({
 
   methods: {
     async login() {
+      authStore.setAuthLoading(true)
       const url = `${this.$config.apiUrl}/login`
       try {
         const tenant = await this.$axios.post(url, this.form)
-        console.log(tenant)
+        authStore.initTenant(tenant.data)
         this.$router.push('/houses')
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error)
+        authStore.setAuthLoading(false)
+        authStore.setAuthError(true, error)
       }
-
-      
+      authStore.setAuthLoading(false)
     },
   },
 })

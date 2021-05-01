@@ -7,7 +7,7 @@ export default class Tenancies extends VuexModule {
   allTenancies: Tenancy[] = []
 
   @Mutation
-  initTenants(tenancies: Tenancy[]) {
+  initTenancies(tenancies: Tenancy[]) {
     this.allTenancies = tenancies
   }
 }

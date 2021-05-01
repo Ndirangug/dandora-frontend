@@ -7,7 +7,7 @@ export default class Bookings extends VuexModule {
   allBookings: Booking[] = []
 
   @Mutation
-  initTenants(bookings: Booking[]) {
+  initBookings(bookings: Booking[]) {
     this.allBookings = bookings
   }
 }

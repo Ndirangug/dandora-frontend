@@ -48,12 +48,16 @@ export default Vue.extend({
       icons: {
         arrowRight: mdiArrowRight,
       },
-      welcome: false,
     }
+  },
+
+  computed: {
+    welcome(): boolean {
+      return this.$route.path.endsWith('/auth')
+    },
   },
   methods: {
     onWelcome() {
-      this.welcome = true
       this.$router.push('/auth')
       console.log('on welcome')
     },

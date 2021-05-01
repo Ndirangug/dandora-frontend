@@ -12,6 +12,9 @@
       <v-tab-item><login /> </v-tab-item>
       <v-tab-item><signup /> </v-tab-item>
     </v-tabs-items>
+
+    <loading-dialog />
+    <error-dialog />
   </div>
 </template>
 
@@ -19,13 +22,22 @@
 import Vue from 'vue'
 import login from '@/components/auth/login.vue'
 import signup from '@/components/auth/signup.vue'
+import { authStore } from '~/store'
+import LoadingDialog from '~/components/utils/LoadingDialog.vue'
+import ErrorDialog from '~/components/utils/ErrorDialog.vue'
 
 export default Vue.extend({
-  components: { login, signup },
+  components: { login, signup, LoadingDialog, ErrorDialog },
   data() {
     return {
       tab: null,
     }
+  },
+
+  computed: {
+    loading(): boolean {
+      return authStore.authLoading
+    },
   },
 })
 </script>

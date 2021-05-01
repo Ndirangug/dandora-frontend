@@ -7,7 +7,7 @@ export default class Payments extends VuexModule {
   allPayments: Payment[] = []
 
   @Mutation
-  initTenants(payments: Payment[]) {
+  initPayments(payments: Payment[]) {
     this.allPayments = payments
   }
 }

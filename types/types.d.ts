@@ -56,4 +56,5 @@ export interface Payment {
   amount: Number
   purpose: 'rent' | 'booking'
   tenancy_id: Number
+  booking_id: Number
 }
