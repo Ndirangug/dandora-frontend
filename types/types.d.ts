@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 export interface House {
-  id?: Number
+  id?: number
   created_at?: Date
   updated_at?: Date
   title: String
   description: String
-  bedrooms: Number
-  rent: Number
+  bedrooms: number
+  rent: number
   phase: String
   photo1: String
   photo2: String
@@ -14,7 +14,7 @@ export interface House {
 }
 
 export interface Tenant {
-  id?: Number
+  id?: number
   created_at?: Date
   updated_at?: Date
   first_name: String
@@ -26,35 +26,37 @@ export interface Tenant {
 }
 
 export interface Tenancy {
-  id: Number
+  id: number
   created_at: Date
   updated_at: Date
   start_date: Date
   end_date: Date
   expected_end_date: Date
-  house_id: Number
-  tenant_id: Number
+  house_id: number
+  tenant_id: number
 }
 
 export interface Booking {
-  id: Number
-  created_at: Number
-  updated_at: Number
-  date_booked: Number
-  expected_occupy_date: Number
+  id: number
+  created_at: number
+  updated_at: number
+  date_booked: number
+  expected_occupy_date: number
   paid: Boolean
-  house_id: Number
-  tenant_id: Number
+  house_id: number
+  tenant_id: number
 }
 
 export interface Payment {
-  id?: Number
+  id?: number
   created_at?: Date
   updated_at?: Date
   date: Date
   for_month: Date
-  amount: Number
+  amount: number
   purpose: 'rent' | 'booking'
-  tenancy_id?: Number
-  booking_id?: Number
+  tenancy_id?: number
+  booking_id?: number
 }
+
+export type GroupedPayments = { [key: string]: Payment[] }

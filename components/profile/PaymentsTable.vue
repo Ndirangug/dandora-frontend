@@ -1,5 +1,5 @@
 <template>
-  <v-simple-table class="mx-16">
+  <v-simple-table height="400" fixed-header class="mx-16">
     <thead>
       <tr>
         <th v-for="entry in header" :key="entry" class="text-capitalize">
@@ -36,13 +36,17 @@ export default Vue.extend({
 
   computed: {
     mappedPayments(): Object[] {
-      const payments = this.payments.slice()
-      payments.forEach((payment: Payment) => {
-        delete payment.id
-        delete payment.created_at
-        delete payment.updated_at
-        delete payment.tenancy_id
-        delete payment.booking_id
+      const payments: Object[] = []
+      const dateFormatter = new Intl.DateTimeFormat()
+      const numberFormatter = new Intl.NumberFormat()
+
+      this.payments.forEach((payment: Payment) => {
+        payments.push({
+          date: dateFormatter.format(Date.parse(`${payment.date}`)),
+          monthPaid: dateFormatter.format(Date.parse(`${payment.for_month}`)),
+          amount: numberFormatter.format(payment.amount),
+          purpose: payment.purpose,
+        })
       })
 
       return payments

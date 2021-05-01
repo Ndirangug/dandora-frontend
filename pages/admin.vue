@@ -1,6 +1,21 @@
 <template>
   <div class="admin-container">
-    <h1>Admin</h1>
+    <div class="banner d-flex justify-center align-center mt-16 py-16">
+      <h1 class="white--text">Dashboard</h1>
+    </div>
+
+    <div class="contents flex-column-reverse flex-md-row">
+      <div
+        class="messages"
+        :class="{ 'msg-width': $vuetify.breakpoint.mdAndUp }"
+      ></div>
+      <div
+        class="payments"
+        :class="{ 'payment-width': $vuetify.breakpoint.mdAndUp }"
+      >
+        <all-payments :grouped-payments="groupedPayments" />
+      </div>
+    </div>
 
     <error-dialog />
   </div>
@@ -9,6 +24,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import ErrorDialog from '~/components/utils/ErrorDialog.vue'
+import AllPayments from '~/components/admin/AllPayments.vue'
 import {
   userStore,
   bookingsStore,
@@ -17,10 +33,10 @@ import {
   tenanciesStore,
   tenantsStore,
 } from '~/store'
-import { Tenant, House, Payment, Tenancy } from '~/types/types'
+import { Tenant, House, Payment, Tenancy, GroupedPayments } from '~/types/types'
 
 export default Vue.extend({
-  components: { ErrorDialog },
+  components: { ErrorDialog, AllPayments },
   layout: 'main',
   // middleware({ redirect }) {
   //   if (userStore.adminLoggedIn) {
@@ -97,8 +113,8 @@ export default Vue.extend({
       return tenanciesStore.allTenancies
     },
 
-    groupedPayments() {
-      const groupedPayments: { [key: string]: Object[] } = {}
+    groupedPayments(): GroupedPayments {
+      const groupedPayments: GroupedPayments = {}
 
       this.allPayments.forEach((payment: Payment) => {
         const tenancy = this.allTenancies.find(
@@ -129,3 +145,17 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.banner {
+  background-color: rgb(155, 155, 255);
+}
+
+.msg-width {
+  width: 35%;
+}
+
+.payment-width {
+  width: 65%;
+}
+</style>
