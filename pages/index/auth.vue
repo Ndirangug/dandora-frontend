@@ -22,7 +22,7 @@
 import Vue from 'vue'
 import login from '@/components/auth/login.vue'
 import signup from '@/components/auth/signup.vue'
-import { authStore } from '~/store'
+import { userStore } from '~/store'
 import LoadingDialog from '~/components/utils/LoadingDialog.vue'
 import ErrorDialog from '~/components/utils/ErrorDialog.vue'
 
@@ -36,7 +36,7 @@ export default Vue.extend({
 
   computed: {
     loading(): boolean {
-      return authStore.authLoading
+      return userStore.authLoading
     },
   },
 })

@@ -18,14 +18,18 @@
 <script lang="ts">
 import Vue from 'vue'
 import HouseCard from '@/components/houses/HouseCard.vue'
-import { housesStore } from '~/store'
-import { House } from '~/types/types'
+import { userStore, housesStore } from '~/store'
+import { House, Tenant } from '~/types/types'
 
 export default Vue.extend({
   components: { HouseCard },
   computed: {
     filteredHouses(): House[] {
       return housesStore.filteredHouses
+    },
+    tenant(): Tenant | undefined {
+      //return userStore.tenant
+      return this.$store.state.user.tenant
     },
   },
 })

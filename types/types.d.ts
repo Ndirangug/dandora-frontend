@@ -48,13 +48,13 @@ export interface Booking {
 }
 
 export interface Payment {
-  id: Number
-  created_at: Date
-  updated_at: Date
+  id?: Number
+  created_at?: Date
+  updated_at?: Date
   date: Date
   for_month: Date
   amount: Number
   purpose: 'rent' | 'booking'
-  tenancy_id: Number
-  booking_id: Number
+  tenancy_id?: Number
+  booking_id?: Number
 }

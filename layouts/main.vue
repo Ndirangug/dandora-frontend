@@ -17,12 +17,16 @@
           v-model="group"
           active-class="blue-grey-text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item @click="home">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="profile">
             <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item @click="admin">
+            <v-list-item-title>Admin</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="logOut">
@@ -39,7 +43,7 @@
 <script lang="ts">
 import { mdiMenu } from '@mdi/js'
 import Vue from 'vue'
-import { authStore } from '~/store'
+import { userStore } from '~/store'
 
 export default Vue.extend({
   data() {
@@ -62,7 +66,7 @@ export default Vue.extend({
     logOut() {
       // eslint-disable-next-line no-console
       console.log('log out')
-      authStore.logOut()
+      userStore.logOut()
       this.$router.push('/auth')
     },
     profile() {
@@ -70,6 +74,9 @@ export default Vue.extend({
     },
     admin() {
       this.$router.push('/admin')
+    },
+    home() {
+      this.$router.push('/houses')
     },
   },
 })

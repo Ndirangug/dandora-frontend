@@ -2,8 +2,8 @@
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
 import { Tenant } from '~/types/types'
 
-@Module({ name: 'auth', stateFactory: true, namespaced: true })
-export default class Auth extends VuexModule {
+@Module({ name: 'user', stateFactory: true, namespaced: true })
+export default class User extends VuexModule {
   tenant: Tenant | undefined
   authLoading: boolean = false
   authError: boolean = false

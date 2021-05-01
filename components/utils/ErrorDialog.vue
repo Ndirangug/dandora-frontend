@@ -18,20 +18,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '~/store'
+import { userStore } from '~/store'
 export default Vue.extend({
   computed: {
     error(): boolean {
-      return authStore.authError
+      return userStore.authError
     },
     message(): string {
-      return authStore.errorMessage
+      return userStore.errorMessage
     },
   },
 
   methods: {
     closeDialog() {
-      authStore.setAuthError(false)
+      userStore.setAuthError(false)
     },
   },
 })

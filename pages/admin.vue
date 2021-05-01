@@ -10,30 +10,36 @@
 import Vue from 'vue'
 import ErrorDialog from '~/components/utils/ErrorDialog.vue'
 import {
-  authStore,
+  userStore,
   bookingsStore,
   housesStore,
   paymentsStore,
   tenanciesStore,
   tenantsStore,
 } from '~/store'
-import { Tenant, House, Payment } from '~/types/types'
+import { Tenant, House, Payment, Tenancy } from '~/types/types'
 
 export default Vue.extend({
   components: { ErrorDialog },
-  middleware({ redirect }) {
-    // If the user is not authenticated
-    if (!authStore.adminLoggedIn) {
-      authStore.setAuthError(true, 'You are not logged in as admin!')
-      setTimeout(() => {
-        return redirect('/auth')
-      }, 2000)
-    }
-  },
+  layout: 'main',
+  // middleware({ redirect }) {
+  //   if (userStore.adminLoggedIn) {
+  //      console.log(userStore.adminLoggedIn + ' hhh')
+  //     console.log('You are logged in as admin')
+  //   } else {
+  //     console.log(userStore.adminLoggedIn + ' hhh')
+  //     console.log('You are not logged in as admin')
+
+  //     userStore.setAuthError(true, 'You are not logged in as admin!')
+  //     setTimeout(() => {
+  //       return redirect('/auth')
+  //     }, 2000)
+  //   }
+  // },
 
   computed: {
     tenant(): Tenant | undefined {
-      return authStore.tenant
+      return userStore.tenant
     },
     currentHouse(): House | undefined {
       let house
@@ -85,6 +91,40 @@ export default Vue.extend({
 
     allTenants(): Tenant[] {
       return tenantsStore.allTenants
+    },
+
+    allTenancies(): Tenancy[] {
+      return tenanciesStore.allTenancies
+    },
+
+    groupedPayments() {
+      const groupedPayments: { [key: string]: Object[] } = {}
+
+      this.allPayments.forEach((payment: Payment) => {
+        const tenancy = this.allTenancies.find(
+          (tenancy) => payment.tenancy_id === tenancy.id
+        )
+        const tenant = this.allTenants.find(
+          (tenant) => tenant.id === tenancy?.tenant_id
+        )
+
+        const tenantName = `${tenant?.first_name}_${tenant?.last_name}`
+
+        // eslint-disable-next-line no-prototype-builtins
+        if (!groupedPayments.hasOwnProperty(tenantName)) {
+          groupedPayments[tenantName] = []
+        }
+
+        delete payment.id
+        delete payment.created_at
+        delete payment.updated_at
+        delete payment.tenancy_id
+        delete payment.booking_id
+
+        groupedPayments[tenantName].push(payment)
+      })
+
+      return groupedPayments
     },
   },
 })

@@ -10,11 +10,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '~/store'
+import { userStore } from '~/store'
 export default Vue.extend({
   computed: {
     loading(): boolean {
-      return authStore.authLoading
+      return userStore.authLoading
     },
   },
 })
