@@ -1,9 +1,11 @@
 <template>
   <div class="all-payments pt-16">
+     <h3 class="text-h6 ml-6 mb-4">ALL PAYMENTS</h3>
+
     <group-payments-card
-    class="my-8"
       v-for="(value, key) in groupedPayments"
       :key="key"
+      class="my-8"
       :name="key"
       :payments="value"
     />

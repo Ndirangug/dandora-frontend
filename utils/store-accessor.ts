@@ -8,6 +8,7 @@ import houses from '~/store/houses'
 import bookings from '~/store/bookings'
 import user from '~/store/user'
 import ui from '~/store/ui'
+import messages from '~/store/messages'
 
 let tenanciesStore: tenancies
 let tenantsStore: tenants
@@ -16,6 +17,7 @@ let housesStore: houses
 let bookingsStore: bookings
 let userStore: user
 let uiStore: ui
+let messagesStore: messages
 
 function initialiseStores(store: Store<any>): void {
   tenanciesStore = getModule(tenancies, store)
@@ -25,6 +27,7 @@ function initialiseStores(store: Store<any>): void {
   bookingsStore = getModule(bookings, store)
   userStore = getModule(user, store)
   uiStore = getModule(ui, store)
+  messagesStore = getModule(messages, store)
 }
 
 export {
@@ -36,4 +39,5 @@ export {
   bookingsStore,
   userStore,
   uiStore,
+  messagesStore,
 }

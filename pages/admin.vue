@@ -4,11 +4,13 @@
       <h1 class="white--text">Dashboard</h1>
     </div>
 
-    <div class="contents flex-column-reverse flex-md-row">
+    <div class="contents d-flex flex-column-reverse flex-md-row">
       <div
         class="messages"
         :class="{ 'msg-width': $vuetify.breakpoint.mdAndUp }"
-      ></div>
+      >
+        <messages />
+      </div>
       <div
         class="payments"
         :class="{ 'payment-width': $vuetify.breakpoint.mdAndUp }"
@@ -23,8 +25,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import ErrorDialog from '~/components/utils/ErrorDialog.vue'
 import AllPayments from '~/components/admin/AllPayments.vue'
+import Messages from '~/components/admin/Messages.vue'
 import {
   userStore,
   bookingsStore,
@@ -36,24 +40,23 @@ import {
 import { Tenant, House, Payment, Tenancy, GroupedPayments } from '~/types/types'
 
 export default Vue.extend({
-  components: { ErrorDialog, AllPayments },
+  components: { ErrorDialog, AllPayments, Messages },
   layout: 'main',
-  // middleware({ redirect }) {
-  //   if (userStore.adminLoggedIn) {
-  //      console.log(userStore.adminLoggedIn + ' hhh')
-  //     console.log('You are logged in as admin')
-  //   } else {
-  //     console.log(userStore.adminLoggedIn + ' hhh')
-  //     console.log('You are not logged in as admin')
+  middleware({ redirect, store }) {
+    if (store.getters['user/adminLoggedIn']) {
+      console.log('You are logged in as admin')
+    } else {
+      console.log('You are not logged in as admin')
 
-  //     userStore.setAuthError(true, 'You are not logged in as admin!')
-  //     setTimeout(() => {
-  //       return redirect('/auth')
-  //     }, 2000)
-  //   }
-  // },
+      userStore.setAuthError(true, 'You are not logged in as admin!')
+      setTimeout(() => {
+        return redirect('/auth')
+      }, 2000)
+    }
+  },
 
   computed: {
+    ...mapGetters('user', ['adminLoggedIn']),
     tenant(): Tenant | undefined {
       return userStore.tenant
     },
