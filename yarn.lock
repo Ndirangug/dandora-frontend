@@ -4092,6 +4092,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+crypto-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha512-bzHZN8Pn+gS7DQA6n+iUmBfl0hO5DJq++QP3U6uTucDtk/0iGpXd/Gg7CGR0p8tJhofJyaKoWBuJI4eAO00BBg==
+
 css-blank-pseudo@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/css-blank-pseudo/-/css-blank-pseudo-0.1.4.tgz#dfdefd3254bf8a82027993674ccf35483bfcb3c5"
@@ -6356,6 +6361,11 @@ ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
   integrity sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo=
+
+ipayafrica@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/ipayafrica/-/ipayafrica-0.0.2.tgz#1710b993b3d2454ad9ab0ff7d2a6f47c903ba8c7"
+  integrity sha1-FxC5k7PSRUrZqw/30qb0fJA7qMc=
 
 is-absolute-url@^2.0.0:
   version "2.1.0"
@@ -11921,6 +11931,13 @@ vue-client-only@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
   integrity sha512-arhk1wtWAfLsJyxGMoEYhoBowM87/i6HLSG2LH/03Yog6i2d9JEN1peMP0Ceis+/n9DxdenGYZZTxbPPJyHciA==
+
+vue-cryptojs@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/vue-cryptojs/-/vue-cryptojs-2.1.5.tgz#0f31d59820abe58ef09ec881c999bad6fb75d05d"
+  integrity sha512-bllwNCd+jgQ6MOnhXuv+zMwisS7A+h7juFOJQjfrLlSo/Ld7/DTYlGS7OgYAW8bI3DZG3F6otE0iqKseVR2dlQ==
+  dependencies:
+    crypto-js "^4.0.0"
 
 vue-eslint-parser@^7.1.1, vue-eslint-parser@^7.6.0:
   version "7.6.0"

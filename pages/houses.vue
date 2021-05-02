@@ -16,6 +16,8 @@
         <p>No houses. Try another search</p>
       </div>
     </div>
+
+    <payment-dialog />
   </div>
 </template>
 
@@ -23,11 +25,12 @@
 import Vue from 'vue'
 import SearchContainer from '@/components/houses/SearchContainer.vue'
 import HousesGrid from '@/components/houses/HousesGrid.vue'
+import PaymentDialog from '@/components/utils/PaymentDialog.vue'
 import { mdiEmoticonSad } from '@mdi/js'
 import { housesStore } from '~/store'
 
 export default Vue.extend({
-  components: { SearchContainer, HousesGrid },
+  components: { SearchContainer, HousesGrid, PaymentDialog },
   layout: 'main',
   data() {
     return {

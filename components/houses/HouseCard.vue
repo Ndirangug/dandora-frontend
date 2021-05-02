@@ -56,6 +56,7 @@
 import { mdiMinus } from '@mdi/js'
 import Vue, { PropOptions } from 'vue'
 import { House } from '~/types/types'
+import { EventBus } from '~/utils/event-bus'
 
 export default Vue.extend({
   props: {
@@ -105,8 +106,12 @@ export default Vue.extend({
   },
 
   methods: {
-    book() {},
-    rent() {},
+    book() {
+      EventBus.$emit('payment:dialog', true, this.house.rent, 'booking', true)
+    },
+    rent() {
+      EventBus.$emit('payment:dialog', true, this.house.rent, 'rent', true)
+    },
   },
 })
 </script>

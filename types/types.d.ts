@@ -47,6 +47,8 @@ export interface Booking {
   tenant_id: number
 }
 
+export type PaymentPurpose = 'rent' | 'booking' | 'contribution'
+
 export interface Payment {
   id?: number
   created_at?: Date
@@ -54,7 +56,7 @@ export interface Payment {
   date: Date
   for_month: Date
   amount: number
-  purpose: 'rent' | 'booking' | 'contribution'
+  purpose: PaymentPurpose
   tenancy_id?: number
   booking_id?: number
 }

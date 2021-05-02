@@ -9,6 +9,7 @@
       clearable
       :counter="5000"
       shaped
+      filled
       autocomplete
       auto-grow
       placeholder="Type a new message"
