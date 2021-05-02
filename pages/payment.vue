@@ -6,13 +6,12 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  async mounted() {
+  mounted() {
     const amount = parseFloat(this.$route.query.amount as string)
     const phone = this.$route.query.phone
     const email = this.$route.query.email
     let dataString = ''
     const hashkey = 'demoCHANGED'
-
     const params: { [key: string]: string | number } = {
       live: 0,
       bonga: 1,
@@ -26,26 +25,21 @@ export default Vue.extend({
       vid: 'demo',
       crl: 2,
     }
-
     for (const key in params) {
       dataString += params[key]
     }
-
     // @ts-ignore
     const hsh = this.CryptoJS.HmacSHA1(dataString, hashkey).toString()
     const request = { ...params, hsh }
 
-    if (process.browser) {
-      const response = await this.$axios.post(
-        'https://payments.ipayafrica.com/v3/ke',
-        request,
-        {
-          withCredentials: false,
-          headers: { 'Access-Control-Allow-Origin': '*' },
-        }
-      )
-      console.log(response)
+    console.log(request)
+    let url = 'http://localhost:8000/payment-proxy?'
+
+    for (const key in request) {
+      url += `${key}=${request[key]}&`
     }
+
+    window.open(url)
   },
 })
 </script>
