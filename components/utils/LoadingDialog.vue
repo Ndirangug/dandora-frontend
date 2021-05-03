@@ -1,7 +1,7 @@
 <template>
   <v-dialog :value="loading" hide-overlay persistent width="300">
     <v-card class="py-2 px-1" color="primary" dark>
-      <v-card-text >
+      <v-card-text>
         <v-progress-linear indeterminate color="white"></v-progress-linear>
       </v-card-text>
     </v-card>

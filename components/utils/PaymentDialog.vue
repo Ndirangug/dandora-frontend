@@ -71,7 +71,7 @@
 <script lang="ts">
 import { mdiCalendar } from '@mdi/js'
 import Vue from 'vue'
-import { userStore } from '~/store'
+import { paymentsStore } from '~/store'
 import { Payment, PaymentPurpose, Tenancy } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
 
@@ -127,19 +127,18 @@ export default Vue.extend({
   },
   methods: {
     async makePayment() {
-      const booking_id = undefined
+      // const booking_id = undefined
 
-      if (this.form.purpose === 'booking') {
-        // TODO: IMPLEMENT THIS
-      }
+      // if (this.form.purpose === 'booking') {
+      //   // TODO: IMPLEMENT THIS
+      // }
 
       const payment: Payment = {
         date: new Date(),
         for_month: new Date(this.form.for_month),
         amount: this.form.amount,
         purpose: this.form.purpose,
-        tenancy_id: this.form.purpose === 'rent' ? 1 : undefined,
-        booking_id,
+        tenant_id: this.$store.state.user.tenant?.id,
       }
 
       try {
@@ -147,7 +146,8 @@ export default Vue.extend({
           `${this.$config.apiUrl}/payments`,
           payment
         )
-        console.log('response')
+        console.log(response)
+        paymentsStore.addPayment(response.data)
       } catch (error) {
         console.error(error)
       }

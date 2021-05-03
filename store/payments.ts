@@ -10,4 +10,9 @@ export default class Payments extends VuexModule {
   initPayments(payments: Payment[]) {
     this.allPayments = payments
   }
+
+  @Mutation
+  addPayment(payment: Payment){
+    this.allPayments.push(payment)
+  }
 }

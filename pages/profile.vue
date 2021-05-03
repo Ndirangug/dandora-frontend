@@ -83,33 +83,35 @@ export default Vue.extend({
       return tenant
     },
     payments(): Payment[] {
-      const payments: Payment[] = []
+      // const payments: Payment[] = []
 
-      const tenancies = this.$store.state.tenancies.allTenancies
+      // const tenancies = this.$store.state.tenancies.allTenancies
+      //   .slice()
+      //   .filter((tenancy: Tenancy) => tenancy.tenant_id === this.tenant?.id)
+
+      // const bookings = this.$store.state.bookings.allBookings
+      //   .slice()
+      //   .filter((booking: Booking) => booking.tenant_id === this.tenant?.id)
+
+      // tenancies.forEach((tenancy: Tenancy) => {
+      //   this.$store.state.payments.allPayments.forEach((payment: Payment) => {
+      //     if (payment.tenancy_id === tenancy.id) {
+      //       payments.push(payment)
+      //     }
+      //   })
+      // })
+
+      // bookings.forEach((booking: Booking) => {
+      //   this.$store.state.payments.allPayments.forEach((payment: Payment) => {
+      //     if (payment.booking_id === booking.id) {
+      //       payments.push(payment)
+      //     }
+      //   })
+      // })
+
+      return this.$store.state.payments.allPayments
         .slice()
-        .filter((tenancy: Tenancy) => tenancy.tenant_id === this.tenant?.id)
-
-      const bookings = this.$store.state.bookings.allBookings
-        .slice()
-        .filter((booking: Booking) => booking.tenant_id === this.tenant?.id)
-
-      tenancies.forEach((tenancy: Tenancy) => {
-        this.$store.state.payments.allPayments.forEach((payment: Payment) => {
-          if (payment.tenancy_id === tenancy.id) {
-            payments.push(payment)
-          }
-        })
-      })
-
-      bookings.forEach((booking: Booking) => {
-        this.$store.state.payments.allPayments.forEach((payment: Payment) => {
-          if (payment.booking_id === booking.id) {
-            payments.push(payment)
-          }
-        })
-      })
-
-      return payments
+        .filter((payment: Payment) => payment.tenant_id === this.tenant?.id)
     },
   },
 })

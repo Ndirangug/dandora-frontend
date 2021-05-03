@@ -120,11 +120,8 @@ export default Vue.extend({
       const groupedPayments: GroupedPayments = {}
 
       this.allPayments.forEach((payment: Payment) => {
-        const tenancy = this.allTenancies.find(
-          (tenancy) => payment.tenancy_id === tenancy.id
-        )
         const tenant = this.allTenants.find(
-          (tenant) => tenant.id === tenancy?.tenant_id
+          (tenant) => tenant.id === payment?.tenant_id
         )
 
         const tenantName = `${tenant?.first_name}_${tenant?.last_name}`

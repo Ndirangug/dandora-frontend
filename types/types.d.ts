@@ -59,6 +59,7 @@ export interface Payment {
   purpose: PaymentPurpose
   tenancy_id?: number
   booking_id?: number
+  tenant_id: number
 }
 
 export interface Message {
