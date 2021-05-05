@@ -12,7 +12,7 @@ export default Vue.extend({
   data() {
     return { html: '', hashHtml: '' }
   },
-  async mounted() {
+  mounted() {
     const amount = parseFloat(this.$route.query.amount as string)
     const phone = this.$route.query.phone
     const email = this.$route.query.email
@@ -58,6 +58,7 @@ export default Vue.extend({
     let url = 'http://localhost:8000/payment-proxy?'
 
     for (const key in request) {
+      // @ts-ignore
       url += `${key}=${request[key]}&`
     }
 
