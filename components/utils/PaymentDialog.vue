@@ -1,9 +1,9 @@
 <template>
-  <v-dialog :value="show" persistent width="300">
+  <v-dialog :value="show" persistent width="400">
     <v-card>
       <v-card-title>Make Payment</v-card-title>
       <v-card-text>
-        <h6 class="text-h6">
+        <h6 class="text-body-2 mb-8">
           Confirm Payment details then click the proceed button. You will be
           redirected to an external payment service provider from where you'll
           make your payment
@@ -19,8 +19,9 @@
 
           <v-text-field
             v-model="form.amount"
+            prefix="Kshs"
             outlined
-            readonly
+            :readonly="purposeReadOnly"
             label="Amount"
           />
 
@@ -45,7 +46,7 @@
               <v-text-field
                 v-model="form.for_month"
                 label="Period Paying For"
-                :prepend-icon="icons.calendar"
+                :prepend-inner-icon="icons.calendar"
                 readonly
                 outlined
                 v-bind="attrs"
@@ -80,7 +81,7 @@ export default Vue.extend({
     return {
       show: false,
       form: {
-        amount: 0,
+        amount: '0',
         purpose: 'booking' as PaymentPurpose,
         for_month: new Date().toISOString().substr(0, 10),
         phone: this.$store.state.user.tenant?.phone,
@@ -119,7 +120,7 @@ export default Vue.extend({
         purposeReadOnly: boolean
       ) => {
         this.show = show
-        this.form.amount = amount
+        this.form.amount = amount.toFixed(2)
         this.form.purpose = purpose
         this.purposeReadOnly = purposeReadOnly
       }
@@ -136,7 +137,7 @@ export default Vue.extend({
       const payment: Payment = {
         date: new Date(),
         for_month: new Date(this.form.for_month),
-        amount: this.form.amount,
+        amount: parseFloat(this.form.amount),
         purpose: this.form.purpose,
         tenant_id: this.$store.state.user.tenant?.id,
       }
@@ -147,7 +148,7 @@ export default Vue.extend({
           payment
         )
         console.log(response)
-        paymentsStore.addPayment(response.data)
+        paymentsStore.addPayment(response)
       } catch (error) {
         console.error(error)
       }
@@ -159,3 +160,13 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style lang="scss">
+.payment-form {
+  width: 100%;
+
+  .v-input {
+    width: 100% !important;
+  }
+}
+</style>

@@ -31,7 +31,7 @@ export default Vue.extend({
 
   methods: {
     closeDialog() {
-      userStore.setAuthError(false)
+      userStore.setAuthError({ errorOccurred: false, message: '' })
     },
   },
 })

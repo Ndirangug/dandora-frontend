@@ -18,28 +18,29 @@
         <v-tab>Payments</v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="tab" class="tab-items">
         <v-tab-item><personalnformation :tenant="mergedTenant" /> </v-tab-item>
         <v-tab-item><payments :payments="payments" /></v-tab-item>
       </v-tabs-items>
+
+      <v-btn color="primary" class="mx-8 py-4" @click="makePayment"
+        >MAKE PAYMENT</v-btn
+      >
+
+      <payment-dialog />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import PaymentDialog from '@/components/utils/PaymentDialog.vue'
 import Personalnformation from '~/components/profile/Personalnformation.vue'
 import Payments from '~/components/profile/Payments.vue'
-import {
-  bookingsStore,
-  housesStore,
-  paymentsStore,
-  tenanciesStore,
-  userStore,
-} from '~/store'
-import { Booking, House, Payment, Tenancy, Tenant } from '~/types/types'
+import { House, Payment, Tenancy, Tenant } from '~/types/types'
+import { EventBus } from '~/utils/event-bus'
 export default Vue.extend({
-  components: { Personalnformation, Payments },
+  components: { Personalnformation, Payments, PaymentDialog },
   layout: 'main',
   data() {
     return {
@@ -83,35 +84,21 @@ export default Vue.extend({
       return tenant
     },
     payments(): Payment[] {
-      // const payments: Payment[] = []
-
-      // const tenancies = this.$store.state.tenancies.allTenancies
-      //   .slice()
-      //   .filter((tenancy: Tenancy) => tenancy.tenant_id === this.tenant?.id)
-
-      // const bookings = this.$store.state.bookings.allBookings
-      //   .slice()
-      //   .filter((booking: Booking) => booking.tenant_id === this.tenant?.id)
-
-      // tenancies.forEach((tenancy: Tenancy) => {
-      //   this.$store.state.payments.allPayments.forEach((payment: Payment) => {
-      //     if (payment.tenancy_id === tenancy.id) {
-      //       payments.push(payment)
-      //     }
-      //   })
-      // })
-
-      // bookings.forEach((booking: Booking) => {
-      //   this.$store.state.payments.allPayments.forEach((payment: Payment) => {
-      //     if (payment.booking_id === booking.id) {
-      //       payments.push(payment)
-      //     }
-      //   })
-      // })
-
-      return this.$store.state.payments.allPayments
-        .slice()
-        .filter((payment: Payment) => payment.tenant_id === this.tenant?.id)
+      const payments: Payment[] = this.$store.state.payments.allPayments.slice()
+      try {
+        return payments.filter((payment: Payment) => {
+          console.log(payment)
+          return payment.tenant_id === this.tenant?.id
+        })
+      } catch (error) {
+        console.error(error)
+        return []
+      }
+    },
+  },
+  methods: {
+    makePayment() {
+      EventBus.$emit('payment:dialog', true, 0, 'contribution', false)
     },
   },
 })
@@ -130,5 +117,10 @@ export default Vue.extend({
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.tab-items {
+  max-height: 20em;
+  overflow-y: scroll;
 }
 </style>

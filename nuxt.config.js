@@ -74,7 +74,7 @@ export default {
 
   /// https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-runtime-config/#publicruntimeconfig
   publicRuntimeConfig: {
-    apiUrl: 'https://dandora-backend-fybfguvuua-uc.a.run.app/api',
-    // apiUrl: 'loclhost:8000/api',
+    // apiUrl: 'https://dandora-backend-fybfguvuua-uc.a.run.app/api',
+    apiUrl: 'http://localhost:8000/api',
   },
 }

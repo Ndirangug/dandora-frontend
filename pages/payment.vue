@@ -41,17 +41,6 @@ export default Vue.extend({
     const hsh = this.CryptoJS.HmacSHA1(dataString, hashkey).toString()
     console.log(hsh)
 
-    // const hashParams = {
-    //   vendor: 'demo',
-    //   data: dataString,
-    //   key: hashkey,
-    // }
-
-    // this.hashHtml += '<FORM method="POST" action="https://ipayafrica.com/hashid/">'
-    // for (const key in hashParams) {
-    //   this.hashHtml += `${key} :<input name="${key}" type="text" value="${hashParams[key]}"></br>`
-    // }
-    // this.hashHtml += '<button type="submit">  Lipa  </button> </FORM>'
     const request = { ...params, hsh }
     console.log(dataString)
     console.log(request)
@@ -63,12 +52,6 @@ export default Vue.extend({
     }
 
     window.open(url)
-    // this.html += '<FORM action="https://payments.ipayafrica.com/v3/ke">'
-    // for (const key in params) {
-    //   this.html += `${key} :<input name="${key}" type="text" value="${params[key]}"></br>`
-    // }
-    // this.html += `Hash :<input name="hsh" type="text" value="${hsh}"></br>`
-    // this.html += '<button type="submit">  Lipa  </button> </FORM>'
   },
 })
 </script>

@@ -43,12 +43,19 @@ export default Vue.extend({
   components: { ErrorDialog, AllPayments, Messages },
   layout: 'main',
   middleware({ redirect, store }) {
-    if (store.getters['user/adminLoggedIn']) {
+    console.log('admin?')
+
+    if (store.state.user.tenant.email === 'admin@dandora.com') {
+      console.log(store.getters['user/adminLoggedIn'])
       console.log('You are logged in as admin')
     } else {
+      console.log(store.getters['user/adminLoggedIn'])
       console.log('You are not logged in as admin')
 
-      userStore.setAuthError(true, 'You are not logged in as admin!')
+      userStore.setAuthError({
+        errorOccurred: true,
+        message: 'You are not logged in as admin!',
+      })
       setTimeout(() => {
         return redirect('/auth')
       }, 2000)

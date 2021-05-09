@@ -59,8 +59,11 @@ export default Vue.extend({
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)
-         userStore.setAuthLoading(false)
-        userStore.setAuthError(true, error)
+        userStore.setAuthLoading(false)
+        userStore.setAuthError({
+          errorOccurred: true,
+          message: "Couldn't sign up. Maybe try again?",
+        })
       }
       userStore.setAuthLoading(false)
     },

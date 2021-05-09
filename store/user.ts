@@ -28,7 +28,8 @@ export default class User extends VuexModule {
   }
 
   @Mutation
-  setAuthError(errorOccurred: boolean, message: string = '') {
+  setAuthError({ errorOccurred, message }) {
+    console.log('auth error setting')
     this.authError = errorOccurred
     this.errorMessage = message
   }

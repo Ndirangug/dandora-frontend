@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import { Context } from '@nuxt/types'
 import { Store } from 'vuex'
-// @ts-ignore
-import retry from 'async-retry'
 
 import {
   bookingsStore,
@@ -24,35 +22,21 @@ export const actions = {
     // do it once more like so..
     initialiseStores(store)
 
-    let trial = 1
     try {
-      await retry(
-        async (_bail: any) => {
-          console.log(`retry ${trial}`)
+      // if anything throws, we retry
+      const houses = await $axios.$get(`${$config.apiUrl}/houses`)
+      const payments = await $axios.$get(`${$config.apiUrl}/payments`)
+      const tenants = await $axios.$get(`${$config.apiUrl}/tenants`)
+      const bookings = await $axios.$get(`${$config.apiUrl}/bookings`)
+      const tenancies = await $axios.$get(`${$config.apiUrl}/tenancies`)
+      const messages = await $axios.$get(`${$config.apiUrl}/messages`)
 
-          // if anything throws, we retry
-          const houses = await $axios.$get(`${$config.apiUrl}/houses`)
-          const payments = await $axios.$get(`${$config.apiUrl}/payments`)
-          const tenants = await $axios.$get(`${$config.apiUrl}/tenants`)
-          const bookings = await $axios.$get(`${$config.apiUrl}/bookings`)
-          const tenancies = await $axios.$get(`${$config.apiUrl}/tenancies`)
-          const messages = await $axios.$get(`${$config.apiUrl}/messages`)
-          console.log('messages')
-          console.log(messages)
-
-          housesStore.initHouses(houses)
-          paymentsStore.initPayments(payments)
-          tenantsStore.initTenants(tenants)
-          bookingsStore.initBookings(bookings)
-          tenanciesStore.initTenancies(tenancies)
-          messagesStore.initMessages(messages)
-
-          trial++
-        },
-        {
-          retries: 3,
-        }
-      )
+      housesStore.initHouses(houses)
+      paymentsStore.initPayments(payments)
+      tenantsStore.initTenants(tenants)
+      bookingsStore.initBookings(bookings)
+      tenanciesStore.initTenancies(tenancies)
+      messagesStore.initMessages(messages)
     } catch (error) {
       console.error(error.message)
     }
