@@ -73,7 +73,7 @@
 import { mdiCalendar } from '@mdi/js'
 import Vue from 'vue'
 import { paymentsStore } from '~/store'
-import { Payment, PaymentPurpose, Tenancy } from '~/types/types'
+import { Booking, Payment, PaymentPurpose, Tenancy } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
 
 export default Vue.extend({
@@ -91,6 +91,7 @@ export default Vue.extend({
         calendar: mdiCalendar,
       },
       purposeReadOnly: true,
+      houseId: 0,
     }
   },
 
@@ -117,23 +118,19 @@ export default Vue.extend({
         show: boolean,
         amount: number,
         purpose: PaymentPurpose,
-        purposeReadOnly: boolean
+        purposeReadOnly: boolean,
+        houseId: number
       ) => {
         this.show = show
         this.form.amount = amount.toFixed(2)
         this.form.purpose = purpose
         this.purposeReadOnly = purposeReadOnly
+        this.houseId = houseId
       }
     )
   },
   methods: {
     async makePayment() {
-      // const booking_id = undefined
-
-      // if (this.form.purpose === 'booking') {
-      //   // TODO: IMPLEMENT THIS
-      // }
-
       const payment: Payment = {
         date: new Date(),
         for_month: new Date(this.form.for_month),
@@ -149,6 +146,10 @@ export default Vue.extend({
         )
         console.log(response)
         paymentsStore.addPayment(response)
+
+        this.form.purpose === 'booking'
+          ? await this.makeBooking(this.houseId)
+          : await this.makeTenancy(this.houseId)
       } catch (error) {
         console.error(error)
       }
@@ -156,6 +157,47 @@ export default Vue.extend({
       this.$router.push(
         `/payment?amount=${this.form.amount}&phone=${this.form.phone}&email=${this.$store.state.user.tenant?.email}`
       )
+    },
+    async makeBooking(id: number) {
+      console.log('booking')
+
+      const booking: Booking = {
+        date_booked: Date.now(),
+        expected_occupy_date: Date.parse(this.form.for_month),
+        paid: true,
+        house_id: id,
+        tenant_id: this.$store.state.user.tenant?.id,
+      }
+
+      try {
+        const response = await this.$axios.$post(
+          `${this.$config.apiUrl}/bookings`,
+          booking
+        )
+        console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async makeTenancy(id: number) {
+       console.log('tenancing')
+      const tenancy: Tenancy = {
+        start_date: Date.parse(this.form.for_month),
+        house_id: id,
+        tenant_id: this.$store.state.user.tenant?.id,
+      }
+
+      try {
+        const response = await this.$axios.$post(
+          `${this.$config.apiUrl}/tenancies`,
+          tenancy
+        )
+        console.log(response)
+        pa
+      } catch (error) {
+        console.error(error)
+      }
     },
   },
 })

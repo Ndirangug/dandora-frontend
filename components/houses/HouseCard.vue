@@ -1,6 +1,18 @@
 <template>
   <div class="house-card">
-    <v-card class="mx-auto my-12" max-width="374" :height="cardHeight">
+    <div v-if="isAdmin" class="make-available">
+      <v-btn-toggle v-model="toggle_available" mandatory>
+        <v-btn x-small color="success" text> AVAILABLE </v-btn>
+        <v-btn x-small color="warning" text> UNAVAILABLE </v-btn>
+      </v-btn-toggle>
+    </div>
+    <v-card
+      :loading="loading"
+      :disabled="house.booked"
+      class="mx-auto my-12"
+      max-width="374"
+      :height="cardHeight"
+    >
       <v-carousel
         cycle
         :show-arrows="false"
@@ -41,6 +53,17 @@
 
         <div class="description">
           {{ house.description }}
+
+          <p class="mt-1 font-weight-600">
+            House Number: {{ house.house_number }}
+          </p>
+        </div>
+
+        <div class="status">
+          <p v-if="house.booked" class="mb-0 mt-2 warning--text text-caption">
+            BOOKED
+          </p>
+          <p v-else class="mb-0 mt-2 success--text text-caption">AVAILABLE</p>
         </div>
       </v-card-text>
 
@@ -55,7 +78,8 @@
 <script lang="ts">
 import { mdiMinus } from '@mdi/js'
 import Vue, { PropOptions } from 'vue'
-import { House } from '~/types/types'
+import { housesStore } from '~/store'
+import { Booking, House } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
 
 export default Vue.extend({
@@ -72,10 +96,15 @@ export default Vue.extend({
       icons: {
         dash: mdiMinus,
       },
+      toggle_available: this.house.booked ? 1 : 0,
+      loading: false,
     }
   },
 
   computed: {
+    isAdmin(): boolean {
+      return this.$store.state.user.tenant.email === 'admin@dandora.com'
+    },
     cardHeight(): number {
       let height = 550
       // @ts-ignore
@@ -105,12 +134,66 @@ export default Vue.extend({
     },
   },
 
+  watch: {
+    async toggle_available(val: number) {
+      this.loading = true
+
+      if (val === 0) {
+        // TODO: unbook
+        // eslint-disable-next-line no-console
+        console.log('changing available status')
+
+        try {
+          const response = await this.$axios.post(
+            `${this.$config.apiUrl}/houses/unbook/${this.house.id}`
+          )
+          console.log(response)
+
+          housesStore.updateAvailability(this.house.id as number, true)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        }
+      } else {
+        // BOOK
+
+        try {
+          const response = await this.$axios.post(
+            `${this.$config.apiUrl}/houses/makeUnavailable/${this.house.id}`
+          )
+          housesStore.updateAvailability(this.house.id as number, false)
+          console.log(response)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        }
+      }
+
+      this.loading = false
+      this.$forceUpdate()
+    },
+  },
+
   methods: {
     book() {
-      EventBus.$emit('payment:dialog', true, this.house.rent, 'booking', true)
+      EventBus.$emit(
+        'payment:dialog',
+        true,
+        this.house.rent,
+        'booking',
+        true,
+        this.house.id
+      )
     },
     rent() {
-      EventBus.$emit('payment:dialog', true, this.house.rent, 'rent', true)
+      EventBus.$emit(
+        'payment:dialog',
+        true,
+        this.house.rent,
+        'rent',
+        true,
+        this.house.id
+      )
     },
   },
 })

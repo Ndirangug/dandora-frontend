@@ -14,6 +14,12 @@ export default class Houses extends VuexModule {
   }
 
   @Mutation
+  updateAvailability(id: number, available: boolean) {
+    const index = this.allHouses.findIndex((house) => house.id === id)
+    this.allHouses[index].booked = !available
+  }
+
+  @Mutation
   updateFilteredHouses(houses: House[]) {
     this.filteredHouses = houses
   }

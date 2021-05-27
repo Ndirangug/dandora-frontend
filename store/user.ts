@@ -27,7 +27,7 @@ export default class User extends VuexModule {
     this.authLoading = isLoading
   }
 
-  @Mutation
+  @Mutation  // @ts-ignore
   setAuthError({ errorOccurred, message }) {
     console.log('auth error setting')
     this.authError = errorOccurred
