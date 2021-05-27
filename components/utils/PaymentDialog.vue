@@ -164,7 +164,7 @@ export default Vue.extend({
       const booking: Booking = {
         date_booked: Date.now(),
         expected_occupy_date: Date.parse(this.form.for_month),
-        paid: true,
+        paid: 1,
         house_id: id,
         tenant_id: this.$store.state.user.tenant?.id,
       }

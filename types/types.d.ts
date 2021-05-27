@@ -44,7 +44,7 @@ export interface Booking {
   updated_at?: number
   date_booked?: number
   expected_occupy_date?: number
-  paid?: Boolean
+  paid?: Boolean | number
   house_id?: number
   tenant_id?: number
 }

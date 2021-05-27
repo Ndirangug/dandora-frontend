@@ -1,6 +1,6 @@
 <template>
-  <div class="house-card">
-    <div v-if="isAdmin" class="make-available">
+  <div class="house-card mx-auto my-12">
+    <div v-if="isAdmin" class="make-available mb-1">
       <v-btn-toggle v-model="toggle_available" mandatory>
         <v-btn x-small color="success" text> AVAILABLE </v-btn>
         <v-btn x-small color="warning" text> UNAVAILABLE </v-btn>
@@ -9,7 +9,6 @@
     <v-card
       :loading="loading"
       :disabled="house.booked"
-      class="mx-auto my-12"
       max-width="374"
       :height="cardHeight"
     >
