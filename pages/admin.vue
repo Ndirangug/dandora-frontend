@@ -5,7 +5,11 @@
     </div>
 
     <div class="reports">
-      <v-btn @click="generareReport">REPORT</v-btn>
+      <v-btn @click="generareReport('payments')">PAYMENTS REPORT</v-btn>
+      <v-btn @click="generareReport('bookings')">BOOKING HISTORY</v-btn>
+      <v-btn @click="generareReport('current-bookings')"
+        >CURRENTLY BOOKED</v-btn
+      >
     </div>
 
     <div class="contents d-flex flex-column-reverse flex-md-row">
@@ -24,6 +28,7 @@
     </div>
 
     <error-dialog />
+    <report-dialog />
   </div>
 </template>
 
@@ -31,6 +36,7 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import ErrorDialog from '~/components/utils/ErrorDialog.vue'
+import ReportDialog from '~/components/utils/ReportDialog.vue'
 import AllPayments from '~/components/admin/AllPayments.vue'
 import Messages from '~/components/admin/Messages.vue'
 import {
@@ -45,7 +51,7 @@ import { Tenant, House, Payment, Tenancy, GroupedPayments } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
 
 export default Vue.extend({
-  components: { ErrorDialog, AllPayments, Messages },
+  components: { ErrorDialog, AllPayments, Messages, ReportDialog },
   layout: 'main',
   middleware({ redirect, store }) {
     console.log('admin?')
@@ -155,20 +161,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    generareReport() {
-      const query = {
-        resource: 'payments',
-        start_date: '2021-05-27 09:22:13',
-        end_date: '2021-05-27 20:22:13',
-        purpose: 'rent',
-      }
-      // eslint-disable-next-line no-unused-expressions
-      // this.purpose !== '' ? (query.purpose = this.purpose) : null
-
-      this.$router.push({
-        path: '/report',
-        query,
-      })
+    generareReport(resource: string) {
+      EventBus.$emit('report', resource)
     },
   },
 })

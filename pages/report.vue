@@ -28,20 +28,38 @@ export default Vue.extend({
       end_date: '',
       purpose: '',
       resource: '',
-      headers: [
-        {
-          text: 'Payment Id',
-          align: 'start',
-          sortable: false,
-          value: 'id',
-        },
-        { text: 'Date', value: 'created_at' },
-        { text: 'Amount (Kshs)', value: 'amount' },
-        { text: 'Period', value: 'for_month' },
-        { text: 'First Name ', value: 'first_name' },
-        { text: 'Last Name ', value: 'last_name' },
-        { text: 'Phone', value: 'phone' },
-      ],
+      headers:
+        this.$route.query.resource === 'payments'
+          ? [
+              {
+                text: 'Payment Id',
+                align: 'start',
+                sortable: false,
+                value: 'id',
+              },
+              { text: 'Date', value: 'created_at' },
+              { text: 'Amount (Kshs)', value: 'amount' },
+              { text: 'Period', value: 'for_month' },
+              { text: 'Name', value: 'name' },
+              //   { text: 'First Name ', value: 'first_name' },
+              //   { text: 'Last Name ', value: 'last_name' },
+              { text: 'Phone', value: 'phone' },
+            ]
+          : [
+              {
+                text: 'House Number',
+                align: 'start',
+                sortable: false,
+                value: 'house_number',
+              },
+              { text: 'Expected Occupy Date', value: 'expected_occupy_date' },
+              { text: 'Paid', value: 'paid' },
+              { text: 'Date Booked', value: 'date_booked' },
+              { text: 'Name', value: 'name' },
+              //   { text: 'First Name ', value: 'first_name' },
+              //   { text: 'Last Name ', value: 'last_name' },
+              { text: 'Phone', value: 'phone' },
+            ],
     }
   },
 
@@ -54,12 +72,25 @@ export default Vue.extend({
       this.items = response.data
 
       this.items.map((value, key) => {
-        value.created_at = new Intl.DateTimeFormat().format(
-          Date.parse(value.created_at)
-        )
-        value.for_month = new Intl.DateTimeFormat().format(
-          Date.parse(value.for_month)
-        )
+        if (this.resource === 'payments') {
+          value.created_at = new Intl.DateTimeFormat().format(
+            Date.parse(value.created_at)
+          )
+          value.for_month = new Intl.DateTimeFormat().format(
+            Date.parse(value.for_month)
+          )
+        } else {
+          value.expected_occupy_date = new Intl.DateTimeFormat().format(
+            Date.parse(value.created_at)
+          )
+          value.date_booked = new Intl.DateTimeFormat().format(
+            Date.parse(value.for_month)
+          )
+        }
+
+        value.name = `${value.first_name} ${value.last_name}`
+        delete value.first_name
+        delete value.last_name
         console.log(value)
 
         return value
