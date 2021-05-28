@@ -4,6 +4,10 @@
       <h1 class="white--text">Dashboard</h1>
     </div>
 
+    <div class="reports">
+      <v-btn @click="generareReport">REPORT</v-btn>
+    </div>
+
     <div class="contents d-flex flex-column-reverse flex-md-row">
       <div
         class="messages"
@@ -38,6 +42,7 @@ import {
   tenantsStore,
 } from '~/store'
 import { Tenant, House, Payment, Tenancy, GroupedPayments } from '~/types/types'
+import { EventBus } from '~/utils/event-bus'
 
 export default Vue.extend({
   components: { ErrorDialog, AllPayments, Messages },
@@ -61,7 +66,6 @@ export default Vue.extend({
       }, 2000)
     }
   },
-
   computed: {
     ...mapGetters('user', ['adminLoggedIn']),
     tenant(): Tenant | undefined {
@@ -148,6 +152,23 @@ export default Vue.extend({
       })
 
       return groupedPayments
+    },
+  },
+  methods: {
+    generareReport() {
+      const query = {
+        resource: 'payments',
+        start_date: '2021-05-27 09:22:13',
+        end_date: '2021-05-27 20:22:13',
+        purpose: 'rent',
+      }
+      // eslint-disable-next-line no-unused-expressions
+      // this.purpose !== '' ? (query.purpose = this.purpose) : null
+
+      this.$router.push({
+        path: '/report',
+        query,
+      })
     },
   },
 })
