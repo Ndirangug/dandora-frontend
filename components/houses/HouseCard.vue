@@ -112,13 +112,13 @@ export default Vue.extend({
           height = 770
           break
         case 'sm':
-          height = 610
+          height = 630
           break
         case 'md':
-          height = 600
+          height = 640
           break
         case 'lg':
-          height = 570
+          height = 600
           break
         case 'xl':
           height = 550

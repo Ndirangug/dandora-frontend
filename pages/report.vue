@@ -81,16 +81,19 @@ export default Vue.extend({
           )
         } else {
           value.expected_occupy_date = new Intl.DateTimeFormat().format(
-            Date.parse(value.created_at)
+            Date.parse(value.expected_occupy_date)
           )
           value.date_booked = new Intl.DateTimeFormat().format(
-            Date.parse(value.for_month)
+            Date.parse(value.date_booked)
           )
         }
 
-        value.name = `${value.first_name} ${value.last_name}`
+        // eslint-disable-next-line dot-notation
+        value['name'] = `${value.first_name} ${value.last_name}`
+        //value = { ...value, name: `${value.first_name} ${value.last_name}` }
         delete value.first_name
         delete value.last_name
+
         console.log(value)
 
         return value
@@ -140,6 +143,18 @@ export default Vue.extend({
 
   button {
     background: white !important;
+  }
+}
+</style>
+
+<style lang="scss">
+@media print {
+  .print-button {
+    display: none;
+  }
+
+  .v-data-footer {
+    display: none;
   }
 }
 </style>
