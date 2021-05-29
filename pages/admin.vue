@@ -4,7 +4,7 @@
       <h1 class="white--text">Dashboard</h1>
     </div>
 
-    <div class="reports">
+    <div class="reports d-flex justify-space-around py-6 px-1 px-sm-2 px-md-8">
       <v-btn @click="generareReport('payments')">PAYMENTS REPORT</v-btn>
       <v-btn @click="generareReport('bookings')">BOOKING HISTORY</v-btn>
       <v-btn @click="generareReport('current-bookings')"

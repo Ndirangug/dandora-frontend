@@ -1,11 +1,6 @@
 <template>
-  <v-dialog
-    :value="model"
-    hide-overlay
-    width="400"
-    @click:outside="closeDialog"
-  >
-    <v-card class="py-2 px-1">
+  <v-dialog :value="model" hide-overlay width="400" persistent>
+    <v-card class="pb-1 pt-6 px-3">
       <v-card-text>
         <v-menu
           v-model="datePickerStart"
@@ -65,9 +60,12 @@
           label="Purpose"
           :items="['booking', 'contribution', 'rent']"
         />
-
-        <v-btn @click="generareReport">GENERATE REPORT</v-btn>
       </v-card-text>
+
+      <v-card-actions class="justify-end">
+        <v-btn text color="warning" @click="model = false">CANCEL</v-btn>
+        <v-btn text @click="generareReport">GENERATE REPORT</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -117,6 +115,13 @@ export default Vue.extend({
         query,
       })
     },
+    closeDialog() {},
   },
 })
 </script>
+
+<style lang="scss">
+.v-input {
+  width: 100%;
+}
+</style>
