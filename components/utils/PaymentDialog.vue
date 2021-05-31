@@ -73,8 +73,9 @@
 import { mdiCalendar } from '@mdi/js'
 import Vue from 'vue'
 import { paymentsStore } from '~/store'
-import { Booking, Payment, PaymentPurpose, Tenancy } from '~/types/types'
+import { Booking, Payment, PaymentPurpose, Tenancy, House } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
+
 
 export default Vue.extend({
   data() {
@@ -148,14 +149,22 @@ export default Vue.extend({
         paymentsStore.addPayment(response)
 
         this.form.purpose === 'booking'
-          ? await this.makeBooking(this.houseId)
+          ? await  this.makeBooking(this.houseId)
           : await this.makeTenancy(this.houseId)
       } catch (error) {
         console.error(error)
       }
 
+      let houseNumber
+      this.$store.state.houses.allHouses.forEach((house: House) => {
+        if(house.id === this.houseId){
+          houseNumber = house.house_number
+          
+        }
+      })
+
       this.$router.push(
-        `/payment?amount=${this.form.amount}&phone=${this.form.phone}&email=${this.$store.state.user.tenant?.email}`
+        `/payment?amount=${this.form.amount}&phone=${this.form.phone}&email=${this.$store.state.user.tenant?.email}&purpose=${this.form.purpose}&house=${houseNumber}`
       )
     },
     async makeBooking(id: number) {
