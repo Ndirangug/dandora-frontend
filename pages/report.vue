@@ -130,13 +130,13 @@ export default Vue.extend({
 
     switch (this.resource) {
       case 'payments':
-        this.url = 'http://localhost:8000/api/reports/payments'
+        this.url = `${this.$config.apiUrl}/api/reports/payments`
         break
       case 'bookings':
-        this.url = 'http://localhost:8000/api/reports/booking'
+        this.url = `${this.$config.apiUrl}/api/reports/booking`
         break
       case 'current-bookings':
-        this.url = 'http://localhost:8000/api/reports/booking/current'
+        this.url = `${this.$config.apiUrl}/reports/booking/current`
         break
       default:
         break
