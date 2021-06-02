@@ -17,7 +17,6 @@
 <script lang="ts">
 import { mdiPrinter } from '@mdi/js'
 import Vue from 'vue'
-import { EventBus } from '~/utils/event-bus'
 export default Vue.extend({
   data() {
     return {
@@ -65,33 +64,46 @@ export default Vue.extend({
 
   async fetch() {
     const params = { start_date: this.start_date, end_date: this.end_date }
+    // @ts-ignore
     // eslint-disable-next-line no-unused-expressions
     this.purpose !== '' ? (params.purpose = this.purpose) : null
     try {
       const response = await this.$axios.get(this.url, { params })
       this.items = response.data
 
-      this.items.map((value, key) => {
+      // @ts-ignore
+      this.items.map((value, _key) => {
         if (this.resource === 'payments') {
+          // @ts-ignore
           value.created_at = new Intl.DateTimeFormat().format(
+            // @ts-ignore
             Date.parse(value.created_at)
           )
+          // @ts-ignore
           value.for_month = new Intl.DateTimeFormat().format(
+            // @ts-ignore
             Date.parse(value.for_month)
           )
         } else {
+          // @ts-ignore
           value.expected_occupy_date = new Intl.DateTimeFormat().format(
+            // @ts-ignore
             Date.parse(value.expected_occupy_date)
           )
+          // @ts-ignore
           value.date_booked = new Intl.DateTimeFormat().format(
+            // @ts-ignore
             Date.parse(value.date_booked)
           )
         }
 
+        // @ts-ignore
         // eslint-disable-next-line dot-notation
         value['name'] = `${value.first_name} ${value.last_name}`
-        //value = { ...value, name: `${value.first_name} ${value.last_name}` }
+        // value = { ...value, name: `${value.first_name} ${value.last_name}` }
+        // @ts-ignore
         delete value.first_name
+        // @ts-ignore
         delete value.last_name
 
         console.log(value)
@@ -105,11 +117,15 @@ export default Vue.extend({
   },
 
   created() {
+    // @ts-ignore
     this.resource = this.$route.query.resource
+    // @ts-ignore
     // eslint-disable-next-line camelcase
     this.start_date = this.$route.query.start_date
+    // @ts-ignore
     // eslint-disable-next-line camelcase
     this.end_date = this.$route.query.end_date
+    // @ts-ignore
     this.purpose = this.$route.query.purpose
 
     switch (this.resource) {

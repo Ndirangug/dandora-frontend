@@ -73,7 +73,6 @@
 <script lang="ts">
 import { mdiCalendar } from '@mdi/js'
 import Vue from 'vue'
-import { userStore } from '~/store'
 import { EventBus } from '~/utils/event-bus'
 export default Vue.extend({
   data() {
@@ -107,6 +106,7 @@ export default Vue.extend({
         start_date: this.form.start_date,
         end_date: this.form.end_date,
       }
+      // @ts-ignore
       // eslint-disable-next-line no-unused-expressions
       this.form.purpose !== '' ? (query.purpose = this.form.purpose) : null
 

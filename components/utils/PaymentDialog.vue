@@ -76,7 +76,6 @@ import { paymentsStore } from '~/store'
 import { Booking, Payment, PaymentPurpose, Tenancy, House } from '~/types/types'
 import { EventBus } from '~/utils/event-bus'
 
-
 export default Vue.extend({
   data() {
     return {
@@ -149,7 +148,7 @@ export default Vue.extend({
         paymentsStore.addPayment(response)
 
         this.form.purpose === 'booking'
-          ? await  this.makeBooking(this.houseId)
+          ? await this.makeBooking(this.houseId)
           : await this.makeTenancy(this.houseId)
       } catch (error) {
         console.error(error)
@@ -157,9 +156,8 @@ export default Vue.extend({
 
       let houseNumber
       this.$store.state.houses.allHouses.forEach((house: House) => {
-        if(house.id === this.houseId){
+        if (house.id === this.houseId) {
           houseNumber = house.house_number
-          
         }
       })
 
@@ -190,7 +188,7 @@ export default Vue.extend({
     },
 
     async makeTenancy(id: number) {
-       console.log('tenancing')
+      console.log('tenancing')
       const tenancy: Tenancy = {
         start_date: Date.parse(this.form.for_month),
         house_id: id,
@@ -203,7 +201,6 @@ export default Vue.extend({
           tenancy
         )
         console.log(response)
-        pa
       } catch (error) {
         console.error(error)
       }
